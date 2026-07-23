@@ -13,22 +13,21 @@ class TwitchProvider : MainAPI() {
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         val movies = listOf(
-            MovieSearchResponse(
-                name = "Piyash Demo Stream",
-                url = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
-                apiName = this.name,
-                type = TvType.Movie,
-                posterUrl = "https://picsum.photos/400/600",
-            )
+            newMovieSearchResponse(
+                "Piyash Demo Stream", 
+                "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8", 
+                TvType.Movie
+            ) {
+                this.posterUrl = "https://picsum.photos/400/600"
+            }
         )
-        return HomePageResponse(arrayListOf(HomePageList("My Favorites", movies)))
+        return newHomePageResponse(listOf(HomePageList("My Favorites", movies)))
     }
 
     override suspend fun load(url: String): LoadResponse {
         return newMovieLoadResponse("Piyash Demo Stream", url, TvType.Movie, url) {
             this.posterUrl = "https://picsum.photos/400/600"
             this.plot = "ডেমো স্পয়লার। আপনার নিজস্ব m3u8 লিংক ঠিকমতো কাজ করছে।"
-            this.rating = 90
         }
     }
 
